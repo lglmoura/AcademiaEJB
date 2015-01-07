@@ -1,0 +1,67 @@
+package br.iff.pooa20142.academia.model.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the modalidade database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Modalidade.findAll", query="SELECT m FROM Modalidade m")
+public class Modalidade implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String uid;
+
+	private String descricao;
+
+	//bi-directional many-to-one association to Treino
+	@OneToMany(mappedBy="modalidade")
+	private List<Treino> treinos;
+
+	public Modalidade() {
+	}
+
+	public String getUid() {
+		return this.uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getDescricao() {
+		return this.descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public List<Treino> getTreinos() {
+		return this.treinos;
+	}
+
+	public void setTreinos(List<Treino> treinos) {
+		this.treinos = treinos;
+	}
+
+	public Treino addTreino(Treino treino) {
+		getTreinos().add(treino);
+		treino.setModalidade(this);
+
+		return treino;
+	}
+
+	public Treino removeTreino(Treino treino) {
+		getTreinos().remove(treino);
+		treino.setModalidade(null);
+
+		return treino;
+	}
+
+}
