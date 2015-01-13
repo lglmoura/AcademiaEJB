@@ -19,13 +19,13 @@ public class Modalidade implements Serializable {
 
 	private String descricao;
 
-	//bi-directional many-to-one association to Treino
-	@OneToMany(mappedBy="modalidade")
-	private List<Treino> treinos;
-
 	//bi-directional many-to-one association to Horario
 	@OneToMany(mappedBy="modalidade")
 	private List<Horario> horarios;
+
+	//bi-directional many-to-one association to Treino
+	@OneToMany(mappedBy="modalidade")
+	private List<Treino> treinos;
 
 	public Modalidade() {
 	}
@@ -44,28 +44,6 @@ public class Modalidade implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public List<Treino> getTreinos() {
-		return this.treinos;
-	}
-
-	public void setTreinos(List<Treino> treinos) {
-		this.treinos = treinos;
-	}
-
-	public Treino addTreino(Treino treino) {
-		getTreinos().add(treino);
-		treino.setModalidade(this);
-
-		return treino;
-	}
-
-	public Treino removeTreino(Treino treino) {
-		getTreinos().remove(treino);
-		treino.setModalidade(null);
-
-		return treino;
 	}
 
 	public List<Horario> getHorarios() {
@@ -88,6 +66,28 @@ public class Modalidade implements Serializable {
 		horario.setModalidade(null);
 
 		return horario;
+	}
+
+	public List<Treino> getTreinos() {
+		return this.treinos;
+	}
+
+	public void setTreinos(List<Treino> treinos) {
+		this.treinos = treinos;
+	}
+
+	public Treino addTreino(Treino treino) {
+		getTreinos().add(treino);
+		treino.setModalidade(this);
+
+		return treino;
+	}
+
+	public Treino removeTreino(Treino treino) {
+		getTreinos().remove(treino);
+		treino.setModalidade(null);
+
+		return treino;
 	}
 
 }

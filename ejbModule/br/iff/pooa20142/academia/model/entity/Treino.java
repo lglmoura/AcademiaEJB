@@ -26,6 +26,10 @@ public class Treino implements Serializable {
 
 	private Timestamp horainicio;
 
+	//bi-directional many-to-one association to Avaliacao
+	@OneToMany(mappedBy="treino")
+	private List<Avaliacao> avaliacaos;
+
 	//bi-directional many-to-one association to Aluno
 	@ManyToOne
 	@JoinColumn(name="uidaluno")
@@ -35,10 +39,6 @@ public class Treino implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="uidmodalidade")
 	private Modalidade modalidade;
-
-	//bi-directional many-to-one association to Avaliacao
-	@OneToMany(mappedBy="treino")
-	private List<Avaliacao> avaliacaos;
 
 	//bi-directional many-to-one association to Treinoexercicio
 	@OneToMany(mappedBy="treino")
@@ -79,22 +79,6 @@ public class Treino implements Serializable {
 		this.horainicio = horainicio;
 	}
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public Modalidade getModalidade() {
-		return this.modalidade;
-	}
-
-	public void setModalidade(Modalidade modalidade) {
-		this.modalidade = modalidade;
-	}
-
 	public List<Avaliacao> getAvaliacaos() {
 		return this.avaliacaos;
 	}
@@ -115,6 +99,22 @@ public class Treino implements Serializable {
 		avaliacao.setTreino(null);
 
 		return avaliacao;
+	}
+
+	public Aluno getAluno() {
+		return this.aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public Modalidade getModalidade() {
+		return this.modalidade;
+	}
+
+	public void setModalidade(Modalidade modalidade) {
+		this.modalidade = modalidade;
 	}
 
 	public List<Treinoexercicio> getTreinoexercicios() {
