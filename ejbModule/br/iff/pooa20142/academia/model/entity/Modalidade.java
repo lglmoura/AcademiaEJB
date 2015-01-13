@@ -23,6 +23,10 @@ public class Modalidade implements Serializable {
 	@OneToMany(mappedBy="modalidade")
 	private List<Treino> treinos;
 
+	//bi-directional many-to-one association to Horario
+	@OneToMany(mappedBy="modalidade")
+	private List<Horario> horarios;
+
 	public Modalidade() {
 	}
 
@@ -62,6 +66,28 @@ public class Modalidade implements Serializable {
 		treino.setModalidade(null);
 
 		return treino;
+	}
+
+	public List<Horario> getHorarios() {
+		return this.horarios;
+	}
+
+	public void setHorarios(List<Horario> horarios) {
+		this.horarios = horarios;
+	}
+
+	public Horario addHorario(Horario horario) {
+		getHorarios().add(horario);
+		horario.setModalidade(this);
+
+		return horario;
+	}
+
+	public Horario removeHorario(Horario horario) {
+		getHorarios().remove(horario);
+		horario.setModalidade(null);
+
+		return horario;
 	}
 
 }

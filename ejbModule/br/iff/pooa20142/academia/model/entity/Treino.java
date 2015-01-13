@@ -3,6 +3,8 @@ package br.iff.pooa20142.academia.model.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -17,27 +19,30 @@ public class Treino implements Serializable {
 	@Id
 	private String uid;
 
+	@Temporal(TemporalType.DATE)
+	private Date datainicio;
+
 	private String dia;
 
 	private Timestamp horainicio;
 
-	@Column(name="\"uidAluno\"")
-	private String uidAluno;
-
-	@Column(name="\"uidModalidade\"")
-	private String uidModalidade;
-
 	//bi-directional many-to-one association to Aluno
 	@ManyToOne
-	@JoinColumns({
-		})
+	@JoinColumn(name="uidaluno")
 	private Aluno aluno;
 
 	//bi-directional many-to-one association to Modalidade
 	@ManyToOne
-	@JoinColumns({
-		})
+	@JoinColumn(name="uidmodalidade")
 	private Modalidade modalidade;
+
+	//bi-directional many-to-one association to Avaliacao
+	@OneToMany(mappedBy="treino")
+	private List<Avaliacao> avaliacaos;
+
+	//bi-directional many-to-one association to Treinoexercicio
+	@OneToMany(mappedBy="treino")
+	private List<Treinoexercicio> treinoexercicios;
 
 	public Treino() {
 	}
@@ -48,6 +53,14 @@ public class Treino implements Serializable {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public Date getDatainicio() {
+		return this.datainicio;
+	}
+
+	public void setDatainicio(Date datainicio) {
+		this.datainicio = datainicio;
 	}
 
 	public String getDia() {
@@ -66,22 +79,6 @@ public class Treino implements Serializable {
 		this.horainicio = horainicio;
 	}
 
-	public String getUidAluno() {
-		return this.uidAluno;
-	}
-
-	public void setUidAluno(String uidAluno) {
-		this.uidAluno = uidAluno;
-	}
-
-	public String getUidModalidade() {
-		return this.uidModalidade;
-	}
-
-	public void setUidModalidade(String uidModalidade) {
-		this.uidModalidade = uidModalidade;
-	}
-
 	public Aluno getAluno() {
 		return this.aluno;
 	}
@@ -96,6 +93,50 @@ public class Treino implements Serializable {
 
 	public void setModalidade(Modalidade modalidade) {
 		this.modalidade = modalidade;
+	}
+
+	public List<Avaliacao> getAvaliacaos() {
+		return this.avaliacaos;
+	}
+
+	public void setAvaliacaos(List<Avaliacao> avaliacaos) {
+		this.avaliacaos = avaliacaos;
+	}
+
+	public Avaliacao addAvaliacao(Avaliacao avaliacao) {
+		getAvaliacaos().add(avaliacao);
+		avaliacao.setTreino(this);
+
+		return avaliacao;
+	}
+
+	public Avaliacao removeAvaliacao(Avaliacao avaliacao) {
+		getAvaliacaos().remove(avaliacao);
+		avaliacao.setTreino(null);
+
+		return avaliacao;
+	}
+
+	public List<Treinoexercicio> getTreinoexercicios() {
+		return this.treinoexercicios;
+	}
+
+	public void setTreinoexercicios(List<Treinoexercicio> treinoexercicios) {
+		this.treinoexercicios = treinoexercicios;
+	}
+
+	public Treinoexercicio addTreinoexercicio(Treinoexercicio treinoexercicio) {
+		getTreinoexercicios().add(treinoexercicio);
+		treinoexercicio.setTreino(this);
+
+		return treinoexercicio;
+	}
+
+	public Treinoexercicio removeTreinoexercicio(Treinoexercicio treinoexercicio) {
+		getTreinoexercicios().remove(treinoexercicio);
+		treinoexercicio.setTreino(null);
+
+		return treinoexercicio;
 	}
 
 }
